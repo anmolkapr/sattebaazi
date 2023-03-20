@@ -53,8 +53,8 @@ for i in range(len(dum_list_pota['deliveries'])):
         if 'wicket' in value:
             bowldata[value['bowler']]['wickets'].append(value['wicket']['player_out'])
 
-for i in bowldata:
-    print(i,' ',bowldata[i])
+# for i in bowldata:
+#     print(i,' ',bowldata[i])
         
 
 
