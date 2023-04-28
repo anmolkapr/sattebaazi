@@ -1,5 +1,6 @@
 import yaml 
 import math
+import numpy as np
 user_list = {}
 with open(r'data.yaml') as file:
     user_list = yaml.load(file,Loader = yaml.FullLoader)
@@ -54,52 +55,82 @@ for i in range(len(dum_list_pota['deliveries'])):
             bowldata[value['bowler']]['wickets'].append(value['wicket']['player_out'])
 
 # for i in bowldata:
-#     print(i,' ',bowldata[i])
+#     # print(i,' ',bowldata[i])
+        
+# # CURRENT MATCH    
+# # (general stuff)    
+# 1 bowl number 
+# 2 run rate
+# 3 Required run rate(0 for 1st innings)
+# 4 wicket array
+# # bowler's performance 
+# 5 current economy (runs /balls)
+# 6 wicket performance (total wickets taken)
+# batsmen
+# 7 strike rate(runs / ball * 100)
+# 8 total runs
+# #batsmen vs bowler
+# 9 balls/runs
+
+# #PREVIOUS DATA
+
+# # bowler vs batsmen
+# 10 balls vs Runs (balls / runs (discounted))
+# 11 wickets (sigma wickets) (discounted)
+
+# #bowler perf
+# 12 economy (runs / balls (disc))
+# 13 wickets (sigma wickets (disc))
+
+# #batsmen
+# 14 strike rate(average)
+# 15 runs(sigma runs discounted)
+
+
+totruns = 0 
+bowlnum = 0
+target = 0
+innings = 0
+
+vec = np.zeros([124,24])
+
+wickets = np.zeros(10)
+wicketct = 0
+wickets[0] = 1
+
+for i in range(len(dum_list_pota['deliveries'])):
+    for key , value in dum_list_pota['deliveries'][i].items():
+        print(key,' ',value)
+        bowlnum += 1
+        totruns += value['runs']['total']
+        vec[bowlnum - 1][0] = bowlnum
+        vec[bowlnum - 1][1] = totruns/bowlnum
+        vec[bowlnum - 1][2] = (target - totruns)/(125 - bowlnum)*(innings)
+        if 'wicket' in value:
+            wickets[wicketct] = 0
+            wicketct += 1
+            wickets[wicketct] = 1
+        
+        for j in range(10):
+            vec[bowlnum-1][3+j] = wickets[j]
+        
+        
+        
+        
         
 
-
+print(bowlnum)
 
 
 
 # for i in range(len(dum_list_pota['deliveries'])):
 #     for key , value in dum_list_pota['deliveries'][i].items():
 #         print(key,' ',value)
-
-
-        
-# CURRENT MATCH    
-# (general stuff)    
-bowl number 
-run rate
-Required run rate(0 for 1st innings)
-wicket array
-# bowler's performance 
-current economy (runs /balls)
-wicket performance (total wickets taken)
-#batsmen
-strike rate(runs / ball * 100)
-total runs
-#batsmen vs bowler
-balls/runs
-
-#PREVIOUS DATA
-
-# bowler vs batsmen
-balls vs Runs (balls / runs (discounted))
-wickets (sigma wickets) (discounted)
-
-#bowler perf
-economy (runs / balls (disc))
-wickets (sigma wickets (disc))
-
-#batsmen
-strike rate(average)
-runs(sigma runs discounted)
+#         
 
 
 
 
 
 
-
-   
+    
