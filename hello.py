@@ -67,7 +67,35 @@ for i in range(len(dum_list_pota['deliveries'])):
 
 
         
-        
+# CURRENT MATCH    
+# (general stuff)    
+bowl number 
+run rate
+Required run rate(0 for 1st innings)
+wicket array
+# bowler's performance 
+current economy (runs /balls)
+wicket performance (total wickets taken)
+#batsmen
+strike rate(runs / ball * 100)
+total runs
+#batsmen vs bowler
+balls/runs
+
+#PREVIOUS DATA
+
+# bowler vs batsmen
+balls vs Runs (balls / runs (discounted))
+wickets (sigma wickets) (discounted)
+
+#bowler perf
+economy (runs / balls (disc))
+wickets (sigma wickets (disc))
+
+#batsmen
+strike rate(average)
+runs(sigma runs discounted)
+
 
 
 
