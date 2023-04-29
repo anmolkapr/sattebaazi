@@ -7,6 +7,7 @@ from hello import *
 n,m = np.shape(vec)
 
 
+
 inp = vec
 out = outcome
 
@@ -38,9 +39,24 @@ def grad_desc(iter):
     for i in range(iter):
         params = params - 0.00001 * diff_cost()
         # print(params)
-        # print(np.sum(calc_cost() ** 2) / (2 * n))
+        print(np.sum(calc_cost() ** 2) / (2 * n))
 
-grad_desc(100)
+grad_desc(10)
+
+
 print(params)
 
+ct = 0
+ctdum = 0
+for i in vec:
+    outputprob = np.inner(i,params)
+    if outputprob > 0.5:
+        if outcome[ctdum] == 0:
+            ct += 1
+    else:
+        if outcome[ctdum] == 1:
+            ct += 1
+    
+    ctdum += 1
 
+print((ct/ctdum)*100)
