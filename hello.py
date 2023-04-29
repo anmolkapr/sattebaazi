@@ -82,8 +82,8 @@ def inningsextract(innings):
         
 # # CURRENT MATCH    
 # # (general stuff)   ✅ 
-# 1 bowl number ✅
-# 2 run rate ✅
+# 1 bowl number ✅✅
+# 2 run rate ✅✅
 # 3 Required run rate(0 for 1st innings) ✅
 # 4 wicket array ✅
 # # bowler's performance ✅
@@ -212,10 +212,6 @@ def vectorcreate(dum_list_pota):
     
 
 
-        
-
-        
- 
 dum_list_pota1, winfg1 = inningsextract('1st innings')
 dum_list_pota2, winfg2 = inningsextract('2nd innings')   
 
