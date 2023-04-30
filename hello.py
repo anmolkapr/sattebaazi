@@ -10,10 +10,17 @@ vec = np.zeros([0,24])
 outcome = np.zeros([0,1])
 inningsnum = 0
 
+totbatdata = {}
+totbowldata = {}
+totbowltobatdata = {}
+
 def createfullvec(s):
     global vec
     global outcome
     global inningsnum
+    global totbatdata
+    global totbowldata
+    global totbowltobatdata
     pathname = ".\ipl\\" + s
     with open(pathname , "r") as file:
         user_list = yaml.load(file,Loader = yaml.FullLoader)
@@ -112,17 +119,19 @@ def createfullvec(s):
 
     # #PREVIOUS DATA
 
+    # batsmen  
+    # 10 strike rate(average)
+    # 11 runs(sigma runs discounted)
+
     # bowler vs batsmen
-    # 10 balls vs Runs (balls / runs (discounted))
-    # 11 wickets (sigma wickets) (discounted)
+    # 14 balls vs Runs (balls / runs (discounted))
+    # 15 wickets (sigma wickets) (discounted)
 
     # bowler perf
     # 12 economy (runs / balls (disc))
     # 13 wickets (sigma wickets (disc))
 
-    # batsmen  
-    # 14 strike rate(average)
-    # 15 runs(sigma runs discounted)
+    
     target = 0
     def vectorcreate(dum_list_pota):
         global inningsnum
@@ -223,18 +232,27 @@ def createfullvec(s):
                     vec[bowlnum - 1][17] = dumdictb[batsmanname + ' to ' + bowlername][0]/dumdictb[batsmanname + ' to ' + bowlername][0]
         if inningsnum == 0:
             target = totruns
-        return vec
+        return vec, batsmanperf, bowlerperf, dumdictb
         
 
 
     dum_list_pota1, winfg1 = inningsextract('1st innings')
     dum_list_pota2, winfg2 = inningsextract('2nd innings')   
 
-    vec1 = vectorcreate(dum_list_pota1)
+    vec1,btsmperf,bwlrperf,bowltobat = vectorcreate(dum_list_pota1)
+    
     vec = np.concatenate((vec, vec1), axis= 0)
     inningsnum = 1
-    vec2 = vectorcreate(dum_list_pota2)
+    vec2,btsmperf1,bwlrperf1,bowltobat1 = vectorcreate(dum_list_pota2)
     vec = np.concatenate((vec, vec2), axis= 0)
+    
+    btsmperf.update(btsmperf1)
+    bwlrperf.update(bwlrperf1)
+    bowltobat.update(bowltobat1)
+   
+    
+    
+    
     inningsnum = 0
 
     sz1 = np.shape(vec1)[0]
@@ -250,17 +268,54 @@ def createfullvec(s):
             outcome1[i] = winfg2
     
     outcome = np.concatenate((outcome, outcome1), axis= 0)
+    
+    
+    for key in btsmperf:
+        
+        if key in totbatdata:
+            totbatdata[key][0] += btsmperf[key][0]
+            totbatdata[key][1] += btsmperf[key][1]
+        else:
+            totbatdata[key] = btsmperf[key]
+
+    
+    
+    for key in bwlrperf:
+        if key in totbowldata:
+            totbowldata[key][0] += bwlrperf[key][0]
+            totbowldata[key][1] += bwlrperf[key][1]
+            totbowldata[key][2] += bwlrperf[key][2]
+        else:
+            totbowldata[key] = bwlrperf[key]
+
+    for key in bowltobat:
+        if key in totbowltobatdata:
+            totbowltobatdata[key][0] += bowltobat[key][0]
+            totbowltobatdata[key][1] += bowltobat[key][1]
+        else:
+            totbowltobatdata[key] = bowltobat[key]
+
+    
+
+    
+    
 
 
 start = 335982
 matches = 0
 
+
 for i in arr: 
- print(i)
- createfullvec(i)
- matches += 1
- if matches == 50:
-     break
+    print(i)
+    createfullvec(i)
+
+
+    matches += 1
+    if matches == 50:
+        break
+ 
+print(totbowltobatdata)
+ 
  
  
 
