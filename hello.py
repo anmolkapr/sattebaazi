@@ -120,8 +120,8 @@ def createfullvec(s):
     # #PREVIOUS DATA
 
     # batsmen  
-    # 10 strike rate(average)
-    # 11 runs(sigma runs discounted)
+    # 10 strike rate(average)✅
+    # 11 runs(sigma runs discounted)✅
 
     # bowler vs batsmen
     # 14 balls vs Runs (balls / runs (discounted))
@@ -230,6 +230,36 @@ def createfullvec(s):
                 # runs/balls
                 if dumdictb[batsmanname + ' to ' + bowlername][0] != 0:
                     vec[bowlnum - 1][17] = dumdictb[batsmanname + ' to ' + bowlername][0]/dumdictb[batsmanname + ' to ' + bowlername][0]
+                
+
+                # if batsmanname in totbatdata:
+                #     # # strike rate 
+                #     if totbatdata[batsmanname][1] != 0:
+                #         vec[bowlnum - 1][18] = totbatdata[batsmanname][0]/totbatdata[batsmanname][1]
+                #     # total runs
+                #         vec[bowlnum - 1][19] = totbatdata[batsmanname][0]
+                
+                # st = bowlername + ' to ' + batsmanname
+                # if st in totbowltobatdata:
+                #     if totbowltobatdata[st][1] != 0:
+                #         vec[bowlnum - 1][20] = (totbowltobatdata[st][0]/totbowltobatdata[st][1])
+                
+                # if bowlername in totbowldata:
+                #     if totbowldata[bowlername][2] != 0:
+                #         vec[bowlnum - 1][22] = totbowldata[bowlername][0]/totbowldata[bowlername][2]
+
+                #     vec[bowlnum - 1][23] = totbowldata[bowlername][1]
+
+                
+
+                
+                
+                
+
+                
+
+                
+
         if inningsnum == 0:
             target = totruns
         return vec, batsmanperf, bowlerperf, dumdictb
@@ -311,11 +341,12 @@ for i in arr:
 
 
     matches += 1
-    if matches == 50:
+    if matches == 100:
         break
  
-print(totbowltobatdata)
- 
+# print(totbatdata)
+# print(totbowltobatdata['S Dhawan to S Aravind'])
+
  
  
 
@@ -353,3 +384,4 @@ print(totbowltobatdata)
     
 
 
+# print(vec[10000])
