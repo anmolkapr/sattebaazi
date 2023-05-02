@@ -1,6 +1,6 @@
 import numpy as np
 from hello import *
-
+from numpy import linalg as LA
 def shuffle_in_unison(a, b):
         assert len(a) == len(b)
         shuffled_a = np.empty(a.shape, dtype=a.dtype)
@@ -23,9 +23,17 @@ out = outcome
 
 params = np.zeros([1 , m])
 
+arr = [ 3.77088176e-04 ,-1.83389805e-02,1.35312572e-03,4.96789215e-01
+, 4.66598750e-01,4.96366631e-01,4.76453799e-01,4.47631339e-01
+, 4.67653908e-01,4.54031046e-01,5.00111724e-01,3.82790715e-01
+, 3.77399828e-01 ,-7.29205194e-04 ,-5.12503221e-03,8.62432780e-05
+, 7.75114993e-05,6.25739624e-03]
+
+for i in range(m):
+    params[0][i] = arr[i]
+
 # print(inp , out , params)
 inp , out = shuffle_in_unison(inp, out)
-        
 
 def calc_cost():
     global params , inp , out
@@ -53,8 +61,13 @@ def grad_desc(iter):
 
 grad_desc(20)
 
-
-print(params)
+# #svd
+# U , S , Vt = LA.svd(inp , full_matrices=False)
+# # print(S)
+# params = Vt.T @ LA.inv(np.diag(S)) @ U.T @ outcome
+# params = np.reshape(params , (1 , 18))
+# print(params)
+# print(np.sum(calc_cost() ** 2) / (2 * n))
 
 ct = 0
 ctdum = 0

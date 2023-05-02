@@ -1,4 +1,3 @@
-
 from hello import *
 import tensorflow as tf
 import numpy as np
@@ -66,19 +65,19 @@ model.compile(optimizer='adam', loss='binary_crossentropy')
 
 history = model.fit(traindata,trainoutcome,epochs = 20)
 
-gry = np.zeros(40)
+gry = np.zeros(20)
 ct = 0
-grx = np.zeros(40)
+grx = np.zeros(20)
 for epoch, loss in enumerate(history.history['loss']):
-    print('Epoch {}: training loss: {}'.format(epoch+1, loss))
-    print(loss)
+    # print('Epoch {}: training loss: {}'.format(epoch+1, loss))
+    # print(loss)
     gry[ct] = loss
     grx[ct] = ct + 1
     ct += 1
 
 plt.plot(grx, gry)
 plt.xlabel('Epoch number')
-plt.xlabel('Loss')
+plt.ylabel('Loss')
 plt.show()
 y_hat = model.predict(x)
 
@@ -110,10 +109,10 @@ y_hat = model.predict(testdata)
 for i in testdata:
     outputprob = y_hat[totct]
     if outputprob > 0.6:
-        if testoutcome[totct] == 0 and testdata[totct][0] > 60 :
+        if testoutcome[totct] == 0 :
             ct += 1
         ctdum += 1
-    elif outputprob < 0.4 and testdata[totct][0] > 60:
+    elif outputprob < 0.4:
         if testoutcome[totct] == 1:
             ct += 1
         ctdum += 1
@@ -122,6 +121,9 @@ for i in testdata:
 
 print("Test data accuracy ")    
 print(100 - (ct / ctdum) * 100)
+
+
+neuralnetacc = (100 - (ct / ctdum) * 100)
 
 end = time.time()
 print("Time taken by this algorithm ")
