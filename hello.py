@@ -3,6 +3,8 @@ import math
 import numpy as np
 import os
 
+
+
 user_list = {}
 arr = os.listdir("./ipl")
 
@@ -336,16 +338,25 @@ matches = 0
 
 
 for i in arr: 
-    print(i)
+    print(matches ,' ',i)
     createfullvec(i)
 
-
     matches += 1
-    if matches == 100:
-        break
+    if matches == 500:
+      break
  
 # print(totbatdata)
 # print(totbowltobatdata['S Dhawan to S Aravind'])
+num, dum = np.shape(vec)
+num = (num*80)//100
+traindata = vec[0: num]
+trainoutcome = outcome[0:num]
+testdata = vec[num:]
+testoutcome = outcome[num:]
+
+print(np.shape(traindata))
+print(np.shape(testdata))
+
 
  
  
